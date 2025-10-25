@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Surprise</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #E0E0E0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+    }
+
+
+    /* Floating neon particles + Vanta.js */
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+
+    .background span {
+      position: absolute;
+      display: block;
+      width: 20px; height: 20px;
+      background: rgba(0,255,133,0.3);
+      animation: move 10s linear infinite;
+      bottom: -150px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #0099ff;
+    }
+
+
+    .background span:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .background span:nth-child(2) { left: 10%; animation-delay: 2s; animation-duration: 12s; }
+    .background span:nth-child(3) { left: 70%; animation-delay: 4s; }
+    .background span:nth-child(4) { left: 40%; animation-delay: 6s; animation-duration: 18s; width: 60px; height: 60px; }
+    .background span:nth-child(5) { left: 65%; animation-delay: 8s; }
+
+
+    @keyframes move {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+    }
+
+
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+
+    .screen { display: none; animation: fadeIn 1.2s ease-in-out; }
+    .screen.active { display: block; }
+
+
+    .text {
+      color: #1ed2ff;
+      text-shadow: 0 0 20px #00FF85;
+      margin-bottom: 15px;
+    }
+
+
+    button {
+      margin-top: 25px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #00FF85, #1E90FF);
+      color: #0D0D0D;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s;
+      box-shadow: 0 0 20px #00FF85, 0 0 10px #1E90FF inset;
+    }
+    button:hover { transform: scale(1.1); }
+
+
+    .coupon {
+      display: inline-block;
+      background: #1E90FF;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00FF85;
+    }
+
+
+    .highlight { color: #00FF85; }
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+
+    .rotate { animation: spin 2s ease-in-out; }
+
+
+    /* Updated GAME styling */
+    #game-area {
+      width: 90%;
+      max-width: 400px;
+      height: 400px;
+      border: 2px dashed #00FF85;
+      position: relative;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(to top, #0D0D0D, #1E3B71);
+      touch-action: none;
+    }
+
+
+    .emoji {
+      font-size: 2.5rem;
+      position: absolute;
+      user-select: none;
+    }
+
+
+    #player {
+      bottom: 10px;
+      left: 150px;
+      font-size: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Animated floating background -->
+  <div class="background">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="container">
+    <div class="screen active" id="screen1">
+      <h1 class="text">Your birthday wish is ready...</h1>
+      <p>But are you?</p>
+      <button onclick="nextScreen(2)">Lesss go 🚀</button>
+    </div>
+
+    <div class="screen" id="screen2">
+      <h1 class="text">🎉 Happy Birthday, Champ!</h1>
+       <p>
+Had this plan to wish you in a special way within a short time,  
+but in the end, it’s all about making you feel special.  
+This might sound cliché, but I’m always wishing you love and fun stuff ahead.  
+Out of nowhere, stop acting like a chutiya — its fun having you around
+because you truly deserve every bit of happiness, success,  
+and love that life and friends like us can offer! 💙  
+<br><br>
+Here’s to ending of your dramatic teenage phase  
+and stepping into the next level.  
+This was too much ik bcz I'm that too much — but you deserve that “too much.”  
+So here’s a little too much for your damn BIRTHDAY!! 
+<br><br>
+Stay grateful for having a friend like me (obviously 😏)  
+and once again — <b>HAPPY BIRTHDAY NAVEEEEEEEENNNNNNNNNNNN!!</b>  
+Love you, buddy!
+</p>
+      <button onclick="startGameAndSwitch()">Upgrade to Level 20🔝</button>
+    </div>
+
+
+    <!-- Emoji Shuttle Catch Game Screen -->
+    <div class="screen" id="screen3">
+      <h1 class="text">🏸 Emoji Shuttle Catch</h1>
+      <p>Swipe or press keys to move. Catch <b>10</b> shuttles to win 🎉</p>
+
+
+      <div id="game-area">
+        <div id="player" class="emoji">🏸</div>
+      </div>
+
+
+      <p id="score">Score: 0</p>
+    </div>
+
+
+    <!-- Win Screen -->
+    <div class="screen" id="screen4">
+      <h1 class="text">🎊 Level Up Complete!</h1>
+      <p>Congratulations, you’ve upgraded to your <span class="highlight">LEVEL 20</span> 🎖️</p>
+      <p>Here’s your exclusive coupon: <span class="coupon">20% OFF Your Life’s Stress 🛍️ </span></p>
+      <button onclick="goToStart()">Replay 🔁</button>
+    </div>
+  </div>
+
+
+
+  <script>
+    function nextScreen(num) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(`screen${num}`).classList.add("active");
+    }
+
+
+    const game = document.getElementById("game-area");
+    const player = document.getElementById("player");
+    const scoreDisplay = document.getElementById("score");
+    const endScreen = document.getElementById("screen4");
+
+
+    let score = 0;
+    let playing = false;
+    let moveLeft = false, moveRight = false;
+
+
+    // Keyboard arrows
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft") moveLeft = true;
+      if (e.key === "ArrowRight") moveRight = true;
+    });
+    document.addEventListener("keyup", e => {
+      if (e.key === "ArrowLeft") moveLeft = false;
+      if (e.key === "ArrowRight") moveRight = false;
+    });
+
+
+    // Touch movement
+    game.addEventListener("touchmove", e => {
+      const touch = e.touches[0];
+      const left = touch.clientX - game.getBoundingClientRect().left - 25;
+      if (left >= 0 && left <= game.clientWidth - 50) {
+        player.style.left = left + "px";
+      }
+    });
+
+
+    // Player movement loop
+    function movePlayer() {
+      if (moveLeft) player.style.left = Math.max(0, player.offsetLeft - 6) + "px";
+      if (moveRight) player.style.left = Math.min(game.clientWidth - 50, player.offsetLeft + 6) + "px";
+    }
+
+
+    // Shuttle generator logic
+    function createShuttle() {
+      if (!playing) return;
+      const shuttle = document.createElement("div");
+      shuttle.classList.add("emoji");
+      shuttle.textContent = "☄";
+      shuttle.style.left = Math.random() * (game.clientWidth - 40) + "px";
+      shuttle.style.top = "0px";
+      game.appendChild(shuttle);
+
+
+      const speed = 2 + Math.random() * 1.5;
+      const drop = setInterval(() => {
+        shuttle.style.top = shuttle.offsetTop + speed + "px";
+
+
+        if (
+          shuttle.offsetTop + 30 >= game.clientHeight - 70 &&
+          shuttle.offsetLeft + 30 > player.offsetLeft &&
+          shuttle.offsetLeft < player.offsetLeft + 60
+        ) {
+          score++;
+          scoreDisplay.innerText = "Score: " + score;
+          shuttle.remove();
+          clearInterval(drop);
+          if (score >= 10) return nextScreen(4);
+        }
+
+
+        if (shuttle.offsetTop > game.clientHeight) {
+          shuttle.remove();
+          clearInterval(drop);
+        }
+      }, 20);
+
+      setTimeout(createShuttle, 1000 + Math.random() * 800);
+    }
+    function startGameAndSwitch() {
+      score = 0;
+      playing = true;
+      scoreDisplay.innerText = "Score: 0";
+      nextScreen(3);
+      createShuttle();
+    }
+    function goToStart() {
+      score = 0;
+      playing = false;
+      scoreDisplay.innerText = "Score: 0";
+      document.getElementById("screen4").style.display = "none";
+      nextScreen(1);
+    }
+    setInterval(movePlayer, 20);
+  </script>
+
+  <!-- Cool animated background -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+  <script>
+  VANTA.NET({
+    el: "body",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: true,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0x00FF85,
+    backgroundColor: 0x0D0D0D,
+    points: 13.00,
+    maxDistance: 25.00,
+    spacing: 18.00
+  })
+  </script>
+</body>
+</html>
