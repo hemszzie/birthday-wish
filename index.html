@@ -116,8 +116,6 @@
 
     .rotate { animation: spin 2s ease-in-out; }
 
-
-    /* Updated GAME styling */
     #game-area {
       width: 90%;
       max-width: 400px;
@@ -183,10 +181,10 @@ Love you, buddy!
     </div>
 
 
-    <!-- Emoji Shuttle Catch Game Screen -->
+    <!-- Shuttle Catch Game Screen -->
     <div class="screen" id="screen3">
-      <h1 class="text">🏸 Emoji Shuttle Catch</h1>
-      <p>Swipe or press keys to move. Catch <b>10</b> shuttles to win 🎉</p>
+      <h1 class="text">🏸Shuttle Catch</h1>
+      <p>Swipe or press to move. Catch <b>20</b> shuttles to continue🎉</p>
 
 
       <div id="game-area">
@@ -272,15 +270,15 @@ Love you, buddy!
 
 
         if (
-          shuttle.offsetTop + 30 >= game.clientHeight - 70 &&
-          shuttle.offsetLeft + 30 > player.offsetLeft &&
-          shuttle.offsetLeft < player.offsetLeft + 60
+          shuttle.offsetTop + 40 >= game.clientHeight - 70 &&
+          shuttle.offsetLeft + 40 > player.offsetLeft &&
+          shuttle.offsetLeft < player.offsetLeft + 80
         ) {
           score++;
           scoreDisplay.innerText = "Score: " + score;
           shuttle.remove();
           clearInterval(drop);
-          if (score >= 10) return nextScreen(4);
+          if (score >= 20) return nextScreen(4);
         }
 
 
@@ -306,7 +304,7 @@ Love you, buddy!
       document.getElementById("screen4").style.display = "none";
       nextScreen(1);
     }
-    setInterval(movePlayer, 20);
+    setInterval(movePlayer, 30);
   </script>
 
   <!-- Cool animated background -->
