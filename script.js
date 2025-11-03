@@ -97,9 +97,6 @@ function nextScreen(num) {
     setInterval(movePlayer, 30);
   </script>
 
-  <!-- Cool animated background -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
   <script>
   VANTA.NET({
     el: "body",
