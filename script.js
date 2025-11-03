@@ -95,22 +95,4 @@ function nextScreen(num) {
       nextScreen(1);
     }
     setInterval(movePlayer, 30);
-  </script>
-
-  <script>
-  VANTA.NET({
-    el: "body",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: true,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    color: 0x00FF85,
-    backgroundColor: 0x0D0D0D,
-    points: 13.00,
-    maxDistance: 25.00,
-    spacing: 18.00
-  })
-  </script>
+  
